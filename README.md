@@ -33,7 +33,7 @@ Summary:
 Response time histogram:
   0.353 [1]	|■■■■
   0.356 [3]	|■■■■■■■■■■■■
-  0.359 [10]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.359 [10]|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   0.362 [7]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   0.365 [2]	|■■■■■■■■
   0.368 [2]	|■■■■■■■■
@@ -55,8 +55,51 @@ Latency distribution:
 
 ```
 
+by improving the `Index` class to be more efficient you should be able to get to tail latency of under `5ms`:
+
+```
+hey -n 30 -c 1 http://localhost:8080/\?q\=hello+world
+
+Summary:
+  Total:	0.0820 secs
+  Slowest:	0.0375 secs
+  Fastest:	0.0011 secs
+  Average:	0.0027 secs
+  Requests/sec:	365.7139
+
+  Total data:	395730 bytes
+  Size/request:	13191 bytes
+
+Response time histogram:
+  0.001 [1]	|■
+  0.005 [28]|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.008 [0]	|
+  0.012 [0]	|
+  0.016 [0]	|
+  0.019 [0]	|
+  0.023 [0]	|
+  0.027 [0]	|
+  0.030 [0]	|
+  0.034 [0]	|
+  0.038 [1]	|■
+
+```
+
 3. `bottle.py` is a standalone webserver micro framework  written in python.  you can find its docs [here](https://bottlepy.org/docs/dev/). your second task is to modify the webserver code (and Index class if needed), such that the webserver response payload will contains a link to the document, following the link should serve the document contents. 
 
+the payload should be similar to:
+```json
+{
+    "results": [
+        {
+            "id": "993945",
+            "link": "http://localhost:8080/data/993945.female.25.HumanResources.Leo.xml"
+        }
+    ]
+}
+```
+
+where visiting http://localhost:8080/data/993945.female.25.HumanResources.Leo.xml should open the document itself.
 
 ## dataset 
 
