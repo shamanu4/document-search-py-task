@@ -8,9 +8,9 @@ class TestStringMethods(unittest.TestCase):
         
         td = tempfile.mkdtemp()
         with open(td + '/' + "1.hello.xml", "w") as f:
-            f.writelines(["hello", "world", "thank you", "python"])
+            f.writelines(["hello\n", "world\n", "thank you\n", "python"])
         with open(td + '/' + "2.goodbye.xml", "w") as f:
-            f.writelines(["goodbye", "friends", "thank you", "python"])
+            f.writelines(["goodbye\n", "friends\n", "thank you\n", "python"])
 
         idx = Index.new(td)
 
