@@ -2,7 +2,7 @@ import unittest
 import tempfile
 from index import Index
 
-class TestStringMethods(unittest.TestCase):
+class TestDocumentIndex(unittest.TestCase):
 
     def test_index(self):
         
