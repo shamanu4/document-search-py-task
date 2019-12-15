@@ -72,7 +72,7 @@ Summary:
 
 Response time histogram:
   0.001 [1]	|■
-  0.005 [28]|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.005 [28]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   0.008 [0]	|
   0.012 [0]	|
   0.016 [0]	|
@@ -83,6 +83,25 @@ Response time histogram:
   0.034 [0]	|
   0.038 [1]	|■
 
+
+Latency distribution:
+  10% in 0.0011 secs
+  25% in 0.0013 secs
+  50% in 0.0014 secs
+  75% in 0.0022 secs
+  90% in 0.0024 secs
+  95% in 0.0375 secs
+  0% in 0.0000 secs
+
+Details (average, fastest, slowest):
+  DNS+dialup:	0.0009 secs, 0.0011 secs, 0.0375 secs
+  DNS-lookup:	0.0006 secs, 0.0004 secs, 0.0025 secs
+  req write:	0.0001 secs, 0.0000 secs, 0.0005 secs
+  resp wait:	0.0016 secs, 0.0004 secs, 0.0323 secs
+  resp read:	0.0001 secs, 0.0000 secs, 0.0006 secs
+
+Status code distribution:
+  [200]	30 responses
 ```
 
 3. `bottle.py` is a standalone webserver micro framework  written in python.  you can find its docs [here](https://bottlepy.org/docs/dev/). your second task is to modify the webserver code (and Index class if needed), such that the webserver response payload will contains a link to the document, following the link should serve the document contents. 
