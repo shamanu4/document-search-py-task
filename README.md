@@ -3,7 +3,19 @@ an interview coding task in python
 
 ## goal
 
-build a webserver API that accepts any number of words in english and returns a list of all documents containing ALL words in the query. 
+given a dataset of documents, where each document has an id, build a webserver endpoint that accepts any number of words in english as input in the query string parameter `q` and returns a list of all of the document ids containing ALL words in the query.
+
+for example, if the webserver is serving at http://localhost:8080, and the words `hello` and `world` both exist only in document 1,
+
+`curl http://localhost:8080/?q=hello+world` 
+
+should return:
+
+```json
+{
+    "results": ["1"]
+}
+```
 
 ## getting familiar with the repo
 1. clone the repo locally
