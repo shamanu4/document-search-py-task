@@ -21,10 +21,16 @@ should return:
 1. clone the repo locally
 2. run the unit tests `cd src && python -m unittest -b test_index`
 3. `index.py` contains a very naive document index implementation. For each query, it will iterate over each document, and look for each word. This can be done in a much more efficient way. 
-4. Running `cd src && python __init__.py` will start a webserver which will search the index. You can use `curl` to query it for example: `http://localhost:8080/?q=hello+world` will return a JSON document with all of the documents containing both `hello` and `world`
+4. Running `python src/__init__.py` will start a webserver which will search the index. You can use `curl` to query it for example: `http://localhost:8080/?q=hello+world` will return a JSON document with all of the documents containing both `hello` and `world`
 
 ## instructions
-1. download and extract the full dataset into `data/` (see below)
+1. download and extract the full [dataset](http://www.cs.biu.ac.il/~koppel/blogs/blogs.zip) into `data/` (see below)
+```sh
+$ cd data
+$ wget http://www.cs.biu.ac.il/~koppel/blogs/blogs.zip
+$ unzip blogs.zip -d .
+$ find blogs -type f -name '*.xml' -print0 | xargs -0 mv -t .
+```
 2. implement a more efficient search index, while maintaing the existing interface (you should not modify the webserver code in this phase). the unit tests should still pass untouched. you may add more tests to help you develop faster. 
 
 benchmarking the current solution with a tool such as [hey](https://github.com/rakyll/hey):

@@ -3,7 +3,7 @@ from bottle import route, run, template, request
 
 
 if __name__ == '__main__':
-    index = Index.new('../data/')
+    index = Index.new('data/')
 
     @route('/')
     def search():
