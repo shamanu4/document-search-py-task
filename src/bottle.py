@@ -128,7 +128,7 @@ if py3k:
     import http.client as httplib
     import _thread as thread
     from urllib.parse import urljoin, SplitResult as UrlSplitResult
-    from urllib.parse import urlencode, quote as urlquote, unquote as urlunquote
+    from urllib.parse import urlencode, quote as urlquote, unquote as urlunquote, urlsplit
     urlunquote = functools.partial(urlunquote, encoding='latin1')
     from http.cookies import SimpleCookie, Morsel, CookieError
     from collections.abc import MutableMapping as DictMixin
@@ -1426,6 +1426,36 @@ class BaseRequest(object):
             results, make sure that the ``X-Forwarded-Host`` header is set
             correctly. """
         return self.urlparts.geturl()
+
+    def build_absolute_uri(self, location):
+        """
+        Build an absolute URI from the location and the variables available in
+        this request.
+        """
+
+        bits = urlsplit(location)
+        urlparts = self.urlparts
+        current_scheme_host = '{}://{}'.format(urlparts.scheme, urlparts.hostname)
+        if urlparts.scheme == "http" and urlparts.port != 80 or urlparts.scheme == "https" and urlparts.port != 443:
+            current_scheme_host = '{}:{}'.format(current_scheme_host, urlparts.port)
+        if not (bits.scheme and bits.netloc):
+            # Handle the simple, most common case. If the location is absolute
+            # and a scheme or host (netloc) isn't provided, skip an expensive
+            # urljoin() as long as no path segments are '.' or '..'.
+            if (bits.path.startswith('/') and not bits.scheme and not bits.netloc and
+                    '/./' not in bits.path and '/../' not in bits.path):
+                # If location starts with '//' but has no netloc, reuse the
+                # schema and netloc from the current request. Strip the double
+                # slashes and continue as if it wasn't specified.
+                if location.startswith('//'):
+                    location = location[2:]
+                location = current_scheme_host + location
+            else:
+                # Join the constructed URL with the provided location, which
+                # allows the provided location to apply query strings to the
+                # base path.
+                location = urljoin(current_scheme_host + self.url, location)
+        return location
 
     @DictProperty('environ', 'bottle.request.urlparts', read_only=True)
     def urlparts(self):
