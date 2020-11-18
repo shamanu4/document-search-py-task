@@ -50,12 +50,12 @@ class Index:
 
         print("Reading data files ...")
         docs = {}
-        listdir = os.listdir(data_path)[:10]
+        listdir = os.listdir(data_path)
         total = len(listdir)
 
         for i, path in enumerate(listdir, start=1):
             if path.endswith('.xml'):
-                doc_id = int(path.split(".")[0])
+                doc_id = path.split(".")[0]
                 full_path = os.path.join(data_path, path)
                 with codecs.open(full_path, "r", encoding='utf-8', errors='ignore') as f:
                     data = f.read()
